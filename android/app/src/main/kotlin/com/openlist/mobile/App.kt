@@ -1,9 +1,9 @@
-package com.openlist.mobile
+package com.dykt.openlist
 
 import android.app.Application
 import android.util.Log
-import com.openlist.mobile.model.openlist.OpenList
-import com.openlist.mobile.utils.ToastUtils.longToast
+import com.dykt.openlist.model.openlist.OpenList
+import com.dykt.openlist.utils.ToastUtils.longToast
 import io.flutter.app.FlutterApplication
 
 val app by lazy { App.app }

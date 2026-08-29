@@ -1,6 +1,6 @@
-package com.openlist.mobile.data.entities
+package com.dykt.openlist.data.entities
 
-import com.openlist.mobile.constant.LogLevel
+import com.dykt.openlist.constant.LogLevel
 
 data class ServerLog(
 

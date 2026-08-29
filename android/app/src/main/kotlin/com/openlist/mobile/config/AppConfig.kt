@@ -1,8 +1,8 @@
-package com.openlist.mobile.config
+package com.dykt.openlist.config
 
 import com.cioccarellia.ksprefs.KsPrefs
 import com.cioccarellia.ksprefs.dynamic
-import com.openlist.mobile.app
+import com.dykt.openlist.app
 
 object AppConfig {
     val prefs by lazy { KsPrefs(app, "app") }

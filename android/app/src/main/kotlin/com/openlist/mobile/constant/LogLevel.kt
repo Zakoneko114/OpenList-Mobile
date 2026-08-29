@@ -1,4 +1,4 @@
-package com.openlist.mobile.constant
+package com.dykt.openlist.constant
 
 import androidx.annotation.IntDef
 

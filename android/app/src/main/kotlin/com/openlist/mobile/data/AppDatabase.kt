@@ -1,13 +1,13 @@
 /*
-package com.openlist.mobile.data
+package com.dykt.openlist.data
 
 import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.openlist.openlistandroid.data.dao.ServerLogDao
-import com.openlist.mobile.data.entities.ServerLog
-import com.openlist.mobile.App.Companion.app
+import com.dykt.openlist.data.entities.ServerLog
+import com.dykt.openlist.App.Companion.app
 
 val appDb by lazy { AppDatabase.create() }
 

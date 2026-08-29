@@ -1,4 +1,4 @@
-package com.openlist.mobile
+package com.dykt.openlist
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -11,7 +11,7 @@ import android.service.quicksettings.TileService
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.openlist.mobile.config.AppConfig
+import com.dykt.openlist.config.AppConfig
 
 
 @RequiresApi(Build.VERSION_CODES.N)

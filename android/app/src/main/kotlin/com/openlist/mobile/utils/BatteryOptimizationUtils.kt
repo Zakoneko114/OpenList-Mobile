@@ -1,4 +1,4 @@
-package com.openlist.mobile.utils
+package com.dykt.openlist.utils
 
 import android.annotation.SuppressLint
 import android.content.Context

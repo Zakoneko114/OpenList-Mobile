@@ -1,18 +1,18 @@
-package com.openlist.mobile.bridge
+package com.dykt.openlist.bridge
 
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.util.Log
-import com.openlist.mobile.OpenListService
-import com.openlist.mobile.BuildConfig
-import com.openlist.mobile.R
-import com.openlist.mobile.SwitchServerActivity
-import com.openlist.mobile.config.AppConfig
-import com.openlist.mobile.model.openlist.OpenList
-import com.openlist.mobile.utils.MyTools
-import com.openlist.mobile.utils.ToastUtils.longToast
-import com.openlist.mobile.utils.ToastUtils.toast
+import com.dykt.openlist.OpenListService
+import com.dykt.openlist.BuildConfig
+import com.dykt.openlist.R
+import com.dykt.openlist.SwitchServerActivity
+import com.dykt.openlist.config.AppConfig
+import com.dykt.openlist.model.openlist.OpenList
+import com.dykt.openlist.utils.MyTools
+import com.dykt.openlist.utils.ToastUtils.longToast
+import com.dykt.openlist.utils.ToastUtils.toast
 import com.openlist.pigeon.GeneratedApi
 
 class AndroidBridge(private val context: Context) : GeneratedApi.Android {

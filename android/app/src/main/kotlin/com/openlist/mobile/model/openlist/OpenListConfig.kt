@@ -1,4 +1,4 @@
-package com.openlist.mobile.model.openlist
+package com.dykt.openlist.model.openlist
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

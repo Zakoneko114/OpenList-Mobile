@@ -1,4 +1,4 @@
-package com.openlist.mobile.utils
+package com.dykt.openlist.utils
 
 object StringUtils {
     private fun paramsParseInternal(params: String): HashMap<String, String> {

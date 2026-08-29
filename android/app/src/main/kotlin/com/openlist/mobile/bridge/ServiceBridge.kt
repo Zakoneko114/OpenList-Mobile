@@ -1,12 +1,12 @@
-package com.openlist.mobile.bridge
+package com.dykt.openlist.bridge
 
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.util.Log
-import com.openlist.mobile.OpenListService
-import com.openlist.mobile.config.AppConfig
-import com.openlist.mobile.utils.BatteryOptimizationUtils
+import com.dykt.openlist.OpenListService
+import com.dykt.openlist.config.AppConfig
+import com.dykt.openlist.utils.BatteryOptimizationUtils
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
@@ -19,7 +19,7 @@ import openlistlib.Openlistlib
 class ServiceBridge(private val context: Context, private val channel: MethodChannel) : MethodCallHandler {
     companion object {
         private const val TAG = "ServiceBridge"
-        private const val CHANNEL_NAME = "com.openlist.mobile/service"
+        private const val CHANNEL_NAME = "com.dykt.openlist/service"
     }
 
     init {

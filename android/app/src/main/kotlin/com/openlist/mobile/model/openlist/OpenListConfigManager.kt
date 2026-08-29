@@ -1,10 +1,10 @@
-package com.openlist.mobile.model.openlist
+package com.dykt.openlist.model.openlist
 
 import android.os.FileObserver
 import android.util.Log
-import com.openlist.mobile.app
-import com.openlist.mobile.constant.AppConst
-import com.openlist.mobile.utils.ToastUtils.longToast
+import com.dykt.openlist.app
+import com.dykt.openlist.constant.AppConst
+import com.dykt.openlist.utils.ToastUtils.longToast
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.coroutineScope

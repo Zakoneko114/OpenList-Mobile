@@ -1,6 +1,6 @@
-package com.openlist.mobile.bridge
+package com.dykt.openlist.bridge
 
-import com.openlist.mobile.config.AppConfig
+import com.dykt.openlist.config.AppConfig
 import com.openlist.pigeon.GeneratedApi
 
 

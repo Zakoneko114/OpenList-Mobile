@@ -1,11 +1,11 @@
-package com.openlist.mobile.bridge
+package com.dykt.openlist.bridge
 
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import com.openlist.mobile.BuildConfig
-import com.openlist.mobile.utils.ToastUtils.longToast
-import com.openlist.mobile.utils.ToastUtils.toast
+import com.dykt.openlist.BuildConfig
+import com.dykt.openlist.utils.ToastUtils.longToast
+import com.dykt.openlist.utils.ToastUtils.toast
 import com.openlist.pigeon.GeneratedApi
 
 class CommonBridge(private val context: Context) : GeneratedApi.NativeCommon {

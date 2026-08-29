@@ -1,10 +1,10 @@
-package com.openlist.mobile.utils
+package com.dykt.openlist.utils
 
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.ClipboardManager.OnPrimaryClipChangedListener
 import android.content.Context
-import com.openlist.mobile.app
+import com.dykt.openlist.app
 
 
 /**

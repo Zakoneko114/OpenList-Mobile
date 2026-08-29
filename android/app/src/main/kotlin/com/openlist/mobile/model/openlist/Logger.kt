@@ -1,4 +1,4 @@
-package com.openlist.mobile.model.openlist
+package com.dykt.openlist.model.openlist
 
 object Logger {
     private var listeners = mutableListOf<Listener>()

@@ -1,4 +1,4 @@
-package com.openlist.mobile.utils
+package com.dykt.openlist.utils
 
 import java.io.File
 import java.io.InputStream

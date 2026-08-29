@@ -1,7 +1,7 @@
-package com.openlist.mobile.constant
+package com.dykt.openlist.constant
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.openlist.mobile.app
+import com.dykt.openlist.app
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 

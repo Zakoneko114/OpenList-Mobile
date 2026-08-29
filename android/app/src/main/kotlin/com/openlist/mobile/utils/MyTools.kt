@@ -1,4 +1,4 @@
-package com.openlist.mobile.utils
+package com.dykt.openlist.utils
 
 import android.annotation.SuppressLint
 import android.app.PendingIntent
@@ -10,7 +10,7 @@ import android.graphics.drawable.Icon
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
-import com.openlist.mobile.utils.ToastUtils.longToast
+import com.dykt.openlist.utils.ToastUtils.longToast
 import splitties.systemservices.powerManager
 
 object MyTools {

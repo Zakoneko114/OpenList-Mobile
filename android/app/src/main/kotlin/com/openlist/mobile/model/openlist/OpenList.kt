@@ -1,15 +1,15 @@
-package com.openlist.mobile.model.openlist
+package com.dykt.openlist.model.openlist
 
 import openlistlib.Openlistlib
 import openlistlib.Event
 import openlistlib.LogCallback
 import android.annotation.SuppressLint
 import android.util.Log
-import com.openlist.mobile.R
-import com.openlist.mobile.app
-import com.openlist.mobile.config.AppConfig
-import com.openlist.mobile.constant.LogLevel
-import com.openlist.mobile.utils.ToastUtils.longToast
+import com.dykt.openlist.R
+import com.dykt.openlist.app
+import com.dykt.openlist.config.AppConfig
+import com.dykt.openlist.constant.LogLevel
+import com.dykt.openlist.utils.ToastUtils.longToast
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Locale

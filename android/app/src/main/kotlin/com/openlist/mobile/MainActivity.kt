@@ -1,4 +1,4 @@
-package com.openlist.mobile
+package com.dykt.openlist
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -7,12 +7,12 @@ import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.openlist.mobile.bridge.AndroidBridge
-import com.openlist.mobile.bridge.AppConfigBridge
-import com.openlist.mobile.bridge.CommonBridge
-import com.openlist.mobile.bridge.ServiceBridge
-import com.openlist.mobile.model.ShortCuts
-import com.openlist.mobile.model.openlist.Logger
+import com.dykt.openlist.bridge.AndroidBridge
+import com.dykt.openlist.bridge.AppConfigBridge
+import com.dykt.openlist.bridge.CommonBridge
+import com.dykt.openlist.bridge.ServiceBridge
+import com.dykt.openlist.model.ShortCuts
+import com.dykt.openlist.model.openlist.Logger
 import com.openlist.pigeon.GeneratedApi
 import com.openlist.pigeon.GeneratedApi.VoidResult
 import io.flutter.embedding.android.FlutterActivity
@@ -53,7 +53,7 @@ class MainActivity : FlutterActivity() {
         mEvent = GeneratedApi.Event(binaryMessage)
 
         // 设置服务桥接
-        val serviceChannel = MethodChannel(binaryMessage, "com.openlist.mobile/service")
+        val serviceChannel = MethodChannel(binaryMessage, "com.dykt.openlist/service")
         serviceBridge = ServiceBridge(this, serviceChannel)
 
         Logger.addListener(object : Logger.Listener {

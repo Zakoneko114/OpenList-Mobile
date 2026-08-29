@@ -1,4 +1,4 @@
-package com.openlist.mobile
+package com.dykt.openlist
 
 import openlistlib.Openlistlib
 import android.annotation.SuppressLint
@@ -16,11 +16,11 @@ import android.os.IBinder
 import android.os.PowerManager
 import android.util.Log
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.openlist.mobile.config.AppConfig
-import com.openlist.mobile.model.openlist.OpenList
-import com.openlist.mobile.utils.AndroidUtils.registerReceiverCompat
-import com.openlist.mobile.utils.ClipboardUtils
-import com.openlist.mobile.utils.ToastUtils.toast
+import com.dykt.openlist.config.AppConfig
+import com.dykt.openlist.model.openlist.OpenList
+import com.dykt.openlist.utils.AndroidUtils.registerReceiverCompat
+import com.dykt.openlist.utils.ClipboardUtils
+import com.dykt.openlist.utils.ToastUtils.toast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

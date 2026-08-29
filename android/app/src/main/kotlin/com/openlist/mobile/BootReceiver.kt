@@ -1,11 +1,11 @@
-package com.openlist.mobile
+package com.dykt.openlist
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.util.Log
-import com.openlist.mobile.config.AppConfig
+import com.dykt.openlist.config.AppConfig
 
 /**
  * Boot receiver - handles device boot and package update events

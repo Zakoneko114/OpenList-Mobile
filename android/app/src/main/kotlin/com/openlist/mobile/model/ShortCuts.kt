@@ -1,12 +1,12 @@
-package com.openlist.mobile.model
+package com.dykt.openlist.model
 
 import android.content.Context
 import android.content.Intent
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
-import com.openlist.mobile.R
-import com.openlist.mobile.SwitchServerActivity
+import com.dykt.openlist.R
+import com.dykt.openlist.SwitchServerActivity
 
 
 object ShortCuts {

@@ -1,11 +1,11 @@
-package com.openlist.mobile
+package com.dykt.openlist
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import com.openlist.mobile.config.AppConfig
-import com.openlist.mobile.utils.ToastUtils.toast
+import com.dykt.openlist.config.AppConfig
+import com.dykt.openlist.utils.ToastUtils.toast
 
 class SwitchServerActivity : Activity() {
     companion object {

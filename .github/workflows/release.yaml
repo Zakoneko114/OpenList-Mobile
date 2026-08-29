@@ -1,6 +1,14 @@
 name: Release
 
 on:
+  push:
+    branches:
+      - "main"
+    paths-ignore:
+      - "*.md"
+      - "*.sh"
+      - ".github/workflows/build.yaml"
+      - ".github/workflows/sync_openlist.yaml"
   workflow_dispatch:
 
 permissions:

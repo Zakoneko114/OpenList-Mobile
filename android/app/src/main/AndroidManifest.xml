@@ -38,7 +38,7 @@
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <application
-        android:name="com.openlist.mobile.App"
+        android:name="com.dykt.openlist.App"
         android:icon="@mipmap/ic_launcher"
 
         android:label="OpenList"
