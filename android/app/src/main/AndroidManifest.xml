@@ -87,7 +87,8 @@
             android:name=".OpenListService"
             android:exported="false"
             android:enabled="true"
-            android:foregroundServiceType="dataSync" />
+            android:foregroundServiceType="dataSync"
+            android:stopWithTask="false" />
 
         <!-- Boot receiver -->
         <receiver
