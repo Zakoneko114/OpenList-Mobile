@@ -1,0 +1,105 @@
+name: Build OpenList APK
+
+on:
+  push:
+    branches:
+      - "main"
+    paths-ignore:
+      - "*.md"
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  version:
+    name: Get Version Information
+    runs-on: ubuntu-latest
+    outputs:
+      version_name: ${{ steps.generate.outputs.version_name }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate Version Name
+        id: generate
+        run: |
+          BASE_VERSION=$(cat openlist_version || echo "1.0.0")
+          BASE_VERSION=${BASE_VERSION#v}
+          TIMESTAMP=$(date +%y%m%d%H)
+          VERSION_NAME="${BASE_VERSION}.${TIMESTAMP}"
+          echo "version_name=${VERSION_NAME}" >> $GITHUB_OUTPUT
+
+  android:
+    name: Build OpenList Android APK
+    needs: [version]
+    runs-on: ubuntu-latest
+    env:
+      release_output: "${{ github.workspace }}/build/app/outputs/apk/release"
+      debug_output: "${{ github.workspace }}/build/app/outputs/flutter-apk"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v3
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.32.7'
+          cache: true
+
+      - name: Get Flutter Dependencies
+        run: flutter pub get
+
+      - name: Build Debug APK (for PR)
+        if: github.event_name == 'pull_request'
+        env:
+          BUILD_VERSION_NAME: ${{ needs.version.outputs.version_name }}
+        run: |
+          flutter build apk --debug --target-platform android-arm64
+          echo "BUILD_TYPE=debug" >> $GITHUB_ENV
+
+      - name: Build Release APK (for push)
+        if: github.event_name != 'pull_request'
+        env:
+          BUILD_VERSION_NAME: ${{ needs.version.outputs.version_name }}
+        run: |
+          flutter build apk --release --target-platform android-arm64
+          echo "BUILD_TYPE=release" >> $GITHUB_ENV
+
+      - name: Set Output Path
+        run: |
+          if [ "${{ env.BUILD_TYPE }}" == "debug" ]; then
+            OUTPUT_DIR="${{ env.debug_output }}"
+          else
+            OUTPUT_DIR="${{ env.release_output }}"
+          fi
+          echo "output_path=$OUTPUT_DIR" >> $GITHUB_ENV
+          echo "ver_name=${{ needs.version.outputs.version_name }}-${{ env.BUILD_TYPE }}" >> $GITHUB_ENV
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: "OpenList-Mobile-${{ env.ver_name }}_arm64-v8a"
+          path: |
+            ${{ env.output_path }}/*arm64-v8a*.apk
+            ${{ env.output_path }}/*.apk
+          if-no-files-found: error
+
+      - name: Display Build Info
+        run: |
+          echo "=== Build Complete ==="
+          echo "Package: com.dykt.openlist"
+          echo "Version: ${{ env.ver_name }}"
+          echo "Build Type: ${{ env.BUILD_TYPE }}"
+          echo "Output Path: ${{ env.output_path }}"
+          ls -la ${{ env.output_path }}/*.apk || true

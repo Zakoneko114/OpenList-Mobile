@@ -1,58 +1,53 @@
-# Miscellaneous
+```
+# Flutter/Dart build artifacts
+.dart_tool/
+build/
+*.jar
 *.class
-*.log
-*.pyc
-*.swp
-.DS_Store
-.atom/
-.buildlog/
-.history
-.svn/
-migrate_working_dir/
-docs/
-.github/prompts/
-CHANGELOG.md
 
-# IntelliJ related
+# Android build artifacts
+*.apk
+*.aar
+*.so
+*.dex
+*.log
+
+# Gradle
+.gradle/
+!gradle/wrapper/gradle-wrapper.properties
+
+# C/C++ build artifacts
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dll
+*.dylib
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*~
+
+# Logs
+*.log
+
+# Environment variables
+.env
+.env.local
+.env.*
+!env.example
+
+# IDE specific
+.vscode/
+.idea/
 *.iml
 *.ipr
 *.iws
-.idea/
 
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
-#.vscode/
-
-# Flutter/Dart/Pub related
-**/doc/api/
-**/ios/Flutter/.last_build_id
-.dart_tool/
-.flutter-plugins
-.flutter-plugins-dependencies
-.pub-cache/
-.pub/
-/build/
-
-# Symbolication related
-app.*.symbols
-
-# Obfuscation related
-app.*.map.json
-
-# Android Studio will place build artifacts here
-/android/app/debug
-/android/app/profile
-/android/app/release
-
-local.properties
-
-*.aar
-*.exe
-*.tgz
-*.jar
-*.zip
-*.so
-
-android/app/.cxx
-android/app/build
+# OS generated files
+.DS_Store
+Thumbs.db
+```
