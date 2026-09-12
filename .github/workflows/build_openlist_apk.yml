@@ -51,11 +51,41 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v3
 
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.32.7'
           cache: true
+
+      - name: Download OpenList Source Code
+        run: |
+          cd $GITHUB_WORKSPACE/openlist-lib/scripts
+          chmod +x *.sh
+          ./init_openlist.sh
+
+      - name: Download Web Assets
+        run: |
+          cd $GITHUB_WORKSPACE/openlist-lib/scripts
+          chmod +x *.sh
+          ./init_web.sh
+
+      - name: Install gomobile and Build Android AAR
+        run: |
+          cd $GITHUB_WORKSPACE/openlist-lib/scripts
+          chmod +x *.sh
+          ./init_gomobile.sh
+          ./gobind.sh
+        env:
+          OPENLIST_VERSION: ${{ needs.version.outputs.version_name }}
+          OPENLIST_WEB_VERSION: rolling
+          OPENLIST_BUILT_AT: ${{ github.event.head_commit.timestamp }}
+          OPENLIST_GIT_COMMIT: ${{ github.sha }}
+          OPENLIST_GIT_AUTHOR: The OpenList Projects Contributors <noreply@openlist.team>
 
       - name: Get Flutter Dependencies
         run: flutter pub get

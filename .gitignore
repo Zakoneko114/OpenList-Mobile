@@ -1,53 +1,40 @@
-```
-# Flutter/Dart build artifacts
-.dart_tool/
-build/
-*.jar
-*.class
+```yaml
+name: Build OpenList APK
 
-# Android build artifacts
-*.apk
-*.aar
-*.so
-*.dex
-*.log
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
-# Gradle
-.gradle/
-!gradle/wrapper/gradle-wrapper.properties
-
-# C/C++ build artifacts
-*.o
-*.obj
-*.a
-*.lib
-*.so
-*.dll
-*.dylib
-
-# Temporary files
-*.tmp
-*.temp
-*.swp
-*~
-
-# Logs
-*.log
-
-# Environment variables
-.env
-.env.local
-.env.*
-!env.example
-
-# IDE specific
-.vscode/
-.idea/
-*.iml
-*.ipr
-*.iws
-
-# OS generated files
-.DS_Store
-Thumbs.db
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Run tests
+      run: |
+        python -m pytest tests/
+    
+    - name: Build APK
+      run: |
+        python build_apk.py
+    
+    - name: Upload APK
+      uses: actions/upload-artifact@v3
+      with:
+        name: openlist-apk
+        path: dist/*.apk
 ```
