@@ -95,8 +95,7 @@ jobs:
         env:
           BUILD_VERSION_NAME: ${{ needs.version.outputs.version_name }}
         run: |
-          cd android
-          ./gradlew assembleDebug --no-daemon --stacktrace
+          flutter build apk --debug --android-skip-build-dependency-validation
           echo "BUILD_TYPE=debug" >> $GITHUB_ENV
 
       - name: Build Release APK (for push)
@@ -104,8 +103,7 @@ jobs:
         env:
           BUILD_VERSION_NAME: ${{ needs.version.outputs.version_name }}
         run: |
-          cd android
-          ./gradlew assembleRelease --no-daemon --stacktrace
+          flutter build apk --release --android-skip-build-dependency-validation
           echo "BUILD_TYPE=release" >> $GITHUB_ENV
 
       - name: Set Output Path
