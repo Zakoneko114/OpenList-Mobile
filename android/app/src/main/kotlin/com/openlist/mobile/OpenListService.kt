@@ -87,11 +87,15 @@ class OpenListService : Service(), OpenList.Listener {
             // Stop foreground service and remove notification
             stopForeground(true)
             cancelNotification()
+            // Release wake lock when stopping
+            releaseWakeLock()
             stopSelf()
         } else {
             // Update notification with current status
             Log.d(TAG, "Updating notification after status change")
             updateNotification()
+            // Re-acquire wake lock when starting to ensure it's always held
+            ensureWakeLock()
         }
     }
 
@@ -102,7 +106,7 @@ class OpenListService : Service(), OpenList.Listener {
 
         serviceInstance = this
 
-        // Android 8.0+ must start foreground notification immediately
+        // Start foreground service immediately for Android 8.0+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             initOrUpdateNotification()
         }
@@ -119,18 +123,8 @@ class OpenListService : Service(), OpenList.Listener {
         // Add OpenList listener
         OpenList.addListener(this)
 
-        // Acquire wake lock if enabled
-        if (AppConfig.isWakeLockEnabled) {
-            try {
-                mWakeLock = powerManager.newWakeLock(
-                    PowerManager.PARTIAL_WAKE_LOCK,
-                    "openlist::service"
-                )
-                mWakeLock?.acquire()
-            } catch (e: Exception) {
-                Log.e(TAG, "Failed to acquire wake lock", e)
-            }
-        }
+        // Acquire wake lock if enabled - ensures device stays awake even when screen is off
+        ensureWakeLock()
 
         Log.d(TAG, "Service onCreate completed")
     }
@@ -146,13 +140,7 @@ class OpenListService : Service(), OpenList.Listener {
         mScope.coroutineContext[Job]?.cancel()
 
         // 释放唤醒锁
-        try {
-            mWakeLock?.release()
-            mWakeLock = null
-            Log.d(TAG, "Wake lock released")
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to release wake lock", e)
-        }
+        releaseWakeLock()
 
         // 停止前台服务并取消通知
         stopForeground(true)
@@ -292,7 +280,53 @@ class OpenListService : Service(), OpenList.Listener {
             startOpenListBackend()
         }
 
+        // Ensure wake lock is held if enabled
+        ensureWakeLock()
+        
+        // Return START_STICKY to ensure service restarts after being killed
         return START_STICKY
+    }
+
+    /**
+     * Ensure wake lock is held if enabled in settings
+     */
+    @SuppressLint("WakelockTimeout")
+    private fun ensureWakeLock() {
+        if (AppConfig.isWakeLockEnabled && mWakeLock == null) {
+            try {
+                mWakeLock = powerManager.newWakeLock(
+                    PowerManager.PARTIAL_WAKE_LOCK,
+                    "openlist::service"
+                )
+                mWakeLock?.acquire()
+                Log.d(TAG, "Wake lock acquired")
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to acquire wake lock", e)
+            }
+        } else if (AppConfig.isWakeLockEnabled && mWakeLock != null && !mWakeLock!!.isHeld) {
+            // Re-acquire if wake lock was released but should still be held
+            try {
+                mWakeLock?.acquire()
+                Log.d(TAG, "Wake lock re-acquired")
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to re-acquire wake lock", e)
+            }
+        }
+    }
+
+    /**
+     * Release wake lock safely
+     */
+    private fun releaseWakeLock() {
+        try {
+            if (mWakeLock != null && mWakeLock!!.isHeld) {
+                mWakeLock?.release()
+                Log.d(TAG, "Wake lock released")
+            }
+            mWakeLock = null
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to release wake lock", e)
+        }
     }
 
     /**
