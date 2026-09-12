@@ -89,7 +89,8 @@ class OpenListService : Service(), OpenList.Listener {
             cancelNotification()
             // Release wake lock when stopping
             releaseWakeLock()
-            stopSelf()
+            // Don't call stopSelf() immediately - let START_STICKY handle restart
+            // This helps with background persistence on Android 13+
         } else {
             // Update notification with current status
             Log.d(TAG, "Updating notification after status change")
@@ -126,6 +127,9 @@ class OpenListService : Service(), OpenList.Listener {
         // Acquire wake lock if enabled - ensures device stays awake even when screen is off
         ensureWakeLock()
 
+        // Start WorkManager keep-alive task for Android 13+
+        ServiceKeepAliveWorker.startKeepAliveWork(this)
+
         Log.d(TAG, "Service onCreate completed")
     }
 
@@ -160,6 +164,9 @@ class OpenListService : Service(), OpenList.Listener {
         
         // Stop database sync task
         stopDatabaseSyncTask()
+        
+        // Cancel WorkManager keep-alive task when service is destroyed
+        ServiceKeepAliveWorker.stopKeepAliveWork(this)
     }
 
     override fun onShutdown(type: String) {
@@ -515,6 +522,26 @@ class OpenListService : Service(), OpenList.Listener {
                     ClipboardUtils.copyText("OpenList", localAddress())
                     toast(R.string.address_copied)
                 }
+            }
+        }
+    }
+
+    /**
+     * 重启服务 - 用于 Android 13+ 保活机制
+     * 当服务被系统杀死后，通过 WorkManager 或 AlarmManager 重启服务
+     */
+    fun restartServiceIfNeeded() {
+        if (!isRunning && !AppConfig.isManuallyStoppedByUser) {
+            Log.d(TAG, "Service not running and not manually stopped, attempting restart")
+            try {
+                val intent = Intent(this, OpenListService::class.java)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    startForegroundService(intent)
+                } else {
+                    startService(intent)
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to restart service", e)
             }
         }
     }
