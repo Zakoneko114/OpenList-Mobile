@@ -95,7 +95,8 @@ jobs:
         env:
           BUILD_VERSION_NAME: ${{ needs.version.outputs.version_name }}
         run: |
-          flutter build apk --debug --android-skip-build-dependency-validation
+          cd android
+          ./gradlew assembleDebug --no-daemon --stacktrace
           echo "BUILD_TYPE=debug" >> $GITHUB_ENV
 
       - name: Build Release APK (for push)
@@ -103,18 +104,22 @@ jobs:
         env:
           BUILD_VERSION_NAME: ${{ needs.version.outputs.version_name }}
         run: |
-          flutter build apk --release --android-skip-build-dependency-validation
+          cd android
+          ./gradlew assembleRelease --no-daemon --stacktrace
           echo "BUILD_TYPE=release" >> $GITHUB_ENV
 
       - name: Set Output Path
         run: |
           if [ "${{ env.BUILD_TYPE }}" == "debug" ]; then
-            OUTPUT_DIR="${{ env.debug_output }}"
+            OUTPUT_DIR="${{ github.workspace }}/build/app/outputs/apk/debug"
           else
-            OUTPUT_DIR="${{ env.release_output }}"
+            OUTPUT_DIR="${{ github.workspace }}/build/app/outputs/apk/release"
           fi
           echo "output_path=$OUTPUT_DIR" >> $GITHUB_ENV
           echo "ver_name=${{ needs.version.outputs.version_name }}-${{ env.BUILD_TYPE }}" >> $GITHUB_ENV
+          echo "Looking for APK in: $OUTPUT_DIR"
+          ls -la "$OUTPUT_DIR" || true
+          find ${{ github.workspace }}/build -name "*.apk" -type f || true
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
