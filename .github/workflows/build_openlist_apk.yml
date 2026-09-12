@@ -95,7 +95,7 @@ jobs:
         env:
           BUILD_VERSION_NAME: ${{ needs.version.outputs.version_name }}
         run: |
-          flutter build apk --debug --target-platform android-arm64
+          flutter build apk --debug --android-skip-build-dependency-validation
           echo "BUILD_TYPE=debug" >> $GITHUB_ENV
 
       - name: Build Release APK (for push)
@@ -103,25 +103,27 @@ jobs:
         env:
           BUILD_VERSION_NAME: ${{ needs.version.outputs.version_name }}
         run: |
-          flutter build apk --release --target-platform android-arm64
+          flutter build apk --release --android-skip-build-dependency-validation
           echo "BUILD_TYPE=release" >> $GITHUB_ENV
 
       - name: Set Output Path
         run: |
           if [ "${{ env.BUILD_TYPE }}" == "debug" ]; then
-            OUTPUT_DIR="${{ env.debug_output }}"
+            OUTPUT_DIR="${{ github.workspace }}/build/app/outputs/apk/debug"
           else
-            OUTPUT_DIR="${{ env.release_output }}"
+            OUTPUT_DIR="${{ github.workspace }}/build/app/outputs/apk/release"
           fi
           echo "output_path=$OUTPUT_DIR" >> $GITHUB_ENV
           echo "ver_name=${{ needs.version.outputs.version_name }}-${{ env.BUILD_TYPE }}" >> $GITHUB_ENV
+          echo "Looking for APK in: $OUTPUT_DIR"
+          ls -la "$OUTPUT_DIR" || true
+          find ${{ github.workspace }}/build -name "*.apk" -type f || true
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: "OpenList-Mobile-${{ env.ver_name }}_arm64-v8a"
           path: |
-            ${{ env.output_path }}/*arm64-v8a*.apk
             ${{ env.output_path }}/*.apk
           if-no-files-found: error
 
